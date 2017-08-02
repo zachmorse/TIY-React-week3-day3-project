@@ -15,6 +15,12 @@ export default (state = initialState, action) => {
       }
       return newState;
 
+    case "CHECK_WIN":
+      if (state.gameBoard.indexOf(" ") < 0) {
+        console.log("WIN CONDITION");
+      }
+      return newState;
+
     default:
       return newState;
   }

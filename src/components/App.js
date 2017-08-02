@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { takeTurn } from "../actions/actions";
+import { takeTurn, checkWin } from "../actions/actions";
 import "../styles/App.css";
 
 let style = {
@@ -25,14 +25,24 @@ let style = {
   }
 };
 
+function doAllTheThings(index) {
+  takeTurn(index);
+  checkWin();
+}
+
 class App extends Component {
   render() {
-    console.log("GAME STATE?", this.props.game);
+    // console.log("GAME STATE?", this.props.game);
     let gameArea = this.props.game.map((square, index) =>
+      // <div
+      //   key={index}
+      //   style={style.ticTacBoxes}
+      //   onClick={() => this.props.takeTurn(index)}
+      // >
       <div
         key={index}
         style={style.ticTacBoxes}
-        onClick={() => this.props.takeTurn(index)}
+        onClick={() => doAllTheThings(index)}
       >
         {square}
       </div>
