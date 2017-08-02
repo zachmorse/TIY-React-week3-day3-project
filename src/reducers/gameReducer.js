@@ -9,10 +9,12 @@ export default (state = initialState, action) => {
   newState.gameBoard = state.gameBoard.slice();
   switch (action.type) {
     case "TAKE_TURN":
-      newState.gameBoard[index] = state.player;
-      newState.player = state.player === "X" ? "O" : "X";
-
+      if (state.gameBoard[index] === " ") {
+        newState.gameBoard[index] = state.player;
+        newState.player = state.player === "X" ? "O" : "X";
+      }
       return newState;
+
     default:
       return newState;
   }
