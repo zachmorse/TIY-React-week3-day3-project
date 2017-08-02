@@ -11,12 +11,17 @@ let style = {
     justifyContent: "center"
   },
   ticTacBoxes: {
+    display: "flex",
     height: 200,
     width: 200,
     backgroundColor: "blue",
     margin: 10,
     padding: 10,
-    flex: "1 1 25%"
+    flex: "1 1 25%",
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: 80,
+    color: "white"
   }
 };
 
@@ -24,8 +29,12 @@ class App extends Component {
   render() {
     console.log("GAME STATE?", this.props.game);
     let gameArea = this.props.game.map((square, index) =>
-      <div style={style.ticTacBoxes}>
-        {index}
+      <div
+        key={index}
+        style={style.ticTacBoxes}
+        onClick={() => this.props.takeTurn(index)}
+      >
+        {square}
       </div>
     );
 
