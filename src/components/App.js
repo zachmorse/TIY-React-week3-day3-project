@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { takeTurn, checkWin } from "../actions/actions";
+import { takeTurn, checkWin, checkCat, newGame } from "../actions/actions";
 import "../styles/App.css";
 
 let style = {
@@ -8,12 +8,13 @@ let style = {
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "center"
+    justifyContent: "center",
+    width: "30rem"
   },
   ticTacBoxes: {
     display: "flex",
-    height: 200,
-    width: 200,
+    height: 100,
+    width: 100,
     backgroundColor: "blue",
     margin: 10,
     padding: 10,
@@ -22,25 +23,26 @@ let style = {
     alignItems: "center",
     fontSize: 80,
     color: "white"
+  },
+  masterAlign: {
+    display: "flex",
+    justifyContent: "center"
   }
 };
 
 function doAllTheThings(index) {
   takeTurn(index);
   checkWin();
+  checkCat();
 }
 
 class App extends Component {
   render() {
     // console.log("GAME STATE?", this.props.game);
     let gameArea = this.props.game.map((square, index) =>
-      // <div
-      //   key={index}
-      //   style={style.ticTacBoxes}
-      //   onClick={() => this.props.takeTurn(index)}
-      // >
       <div
         key={index}
+        className="block"
         style={style.ticTacBoxes}
         onClick={() => doAllTheThings(index)}
       >
@@ -51,8 +53,11 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Tic Tac Toe Game</h1>
-        <div style={style.gameContainer}>
-          {gameArea}
+        <button onClick={() => this.props.newGame()}>Restart Game</button>
+        <div style={style.masterAlign}>
+          <div style={style.gameContainer}>
+            {gameArea}
+          </div>
         </div>
       </div>
     );
@@ -67,7 +72,10 @@ let mapStateToProps = (state, ownProps) => {
 };
 
 let mapDispatchToProps = () => ({
-  takeTurn
+  takeTurn,
+  checkCat,
+  checkWin,
+  newGame
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

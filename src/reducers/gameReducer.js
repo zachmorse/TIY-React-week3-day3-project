@@ -1,6 +1,7 @@
 let initialState = {
   gameBoard: [" ", " ", " ", " ", " ", " ", " ", " ", " "],
-  player: "X"
+  player: "X",
+  winStatus: false
 };
 
 let winningCombinations = [
@@ -26,13 +27,41 @@ export default (state = initialState, action) => {
       }
       return newState;
 
-    case "CHECK_WIN":
+    case "CHECK_CAT":
       if (state.gameBoard.indexOf(" ") < 0) {
-        console.log("WIN CONDITION");
-        // for (let i = 0; i < winningCombinations.length; i++){
-        //   if (state.gameBoard.indexOf("X"))
-        // }
+        setTimeout(() => alert("Cat game! Play again!"), 200);
       }
+      return newState;
+
+    case "CHECK_WIN":
+      for (let i = 0; i < winningCombinations.length; i++) {
+        let option1 = winningCombinations[i][0];
+        let option2 = winningCombinations[i][1];
+        let option3 = winningCombinations[i][2];
+
+        if (
+          state.gameBoard[option1] &&
+          state.gameBoard[option1] === state.gameBoard[option2] &&
+          state.gameBoard[option2] === state.gameBoard[option3] &&
+          state.gameBoard[option1] !== " "
+        ) {
+          let letter = state.gameBoard[option1];
+          let blocks = document.querySelectorAll(".block");
+
+          blocks[option1].style.color = "green";
+          blocks[option2].style.color = "green";
+          blocks[option3].style.color = "green";
+          setTimeout(() => alert(`Game over! ${letter}'s win!`), 200);
+        }
+      }
+      return newState;
+
+    case "NEW_GAME":
+      let blocks = document.querySelectorAll(".block");
+      for (let i = 0; i < 9; i++) {
+        blocks[i].style.color = "white";
+      }
+      newState = initialState;
       return newState;
 
     default:
