@@ -38,7 +38,6 @@ function doAllTheThings(index) {
 
 class App extends Component {
   render() {
-    // console.log("GAME STATE?", this.props.game);
     let gameArea = this.props.game.map((square, index) =>
       <div
         key={index}
